@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>MindMile Trivia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app-bg"></div>
+<div class="app-noise"></div>
+
+<div class="app-shell">
+    <!-- NAVBAR -->
+    <header class="nav">
+        <div class="nav-left">
+            <div class="logo-orb">
+                <span>MM</span>
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">MindMile Trivia</div>
+                <div class="logo-tagline">Every question moves you forward</div>
+            </div>
+        </div>
+
+        <nav class="nav-center">
+            <button id="nav-home" class="nav-link">Home</button>
+            <button id="nav-quiz" class="nav-link">Play</button>
+            <button id="nav-profile" class="nav-link">Profile</button>
+            <button id="nav-leaderboard" class="nav-link">Leaderboard</button>
+        </nav>
+
+        <div class="nav-right">
+            <div id="auth-buttons" class="nav-auth">
+                <button id="btn-open-login" class="btn ghost small">Log in</button>
+                <button id="btn-open-signup" class="btn primary small">
+                    Sign up
+                </button>
+            </div>
+            <div id="user-pill" class="user-pill hidden"></div>
+            <button id="btn-logout" class="btn ghost small hidden">
+                Log out
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-shell">
+        <!-- HOME VIEW -->
+        <section id="view-home" class="view visible">
+            <div class="home-layout">
+                <div class="hero-left">
+                    <div class="hero-eyebrow">Quiz experience</div>
+
+                    <!-- ⭐ UPDATED TAGLINE BELOW ⭐ -->
+                    <h1 class="hero-title">
+                        Every question moves you
+                        <span class="grad-text">one mile forward.</span>
+                    </h1>
+
+                    <p class="hero-sub">
+                        MindMile Trivia serves dense questions from your curated question
+                        bank with smooth transitions, saved sessions, and a focused UI.
+                    </p>
+
+                    <div class="hero-actions">
+                        <button id="btn-start-quiz" class="btn primary big">
+                            Start a new run
+                        </button>
+                        <button id="btn-open-login-hero" class="btn ghost big">
+                            Sign in &amp; save progress
+                        </button>
+                    </div>
+
+                    <div class="hero-pills">
+                        <span id="home-session-chip" class="pill">
+                            Guest mode • Not saved
+                        </span>
+                        <span class="pill">
+                            Avg score: <span id="home-average-score">—</span>
+                        </span>
+                    </div>
+
+                    <!-- QUESTION COUNT SELECTOR -->
+                    <div class="count-selector">
+                        <div class="count-selector-label">Questions per run</div>
+                        <div class="count-chip-row">
+                            <button class="count-chip" data-count="5">5</button>
+                            <button class="count-chip" data-count="10">10</button>
+                            <button class="count-chip" data-count="25">25</button>
+                            <button class="count-chip" data-count="50">50</button>
+                        </div>
+                    </div>
+
+                    <div class="hero-metrics">
+                        <div class="metric">
+                            <div class="metric-label">Current set</div>
+                            <div class="metric-value">
+                                <span id="home-progress-label">0 / 10</span>
+                            </div>
+                            <div class="hero-progress-bar">
+                                <div id="home-progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="hero-right">
+                    <div class="hero-card tilt">
+                        <header class="hero-card-header">
+                            <div>
+                                <div class="hero-card-title">Today’s run preview</div>
+                                <div class="hero-card-sub">
+                                    Sample from your actual question bank
+                                </div>
+                            </div>
+                            <span class="chip-soft" id="quiz-session-pill">Guest run</span>
+                        </header>
+
+                        <div class="hero-card-body">
+                            <div class="hero-ghost-question">
+                                <div class="ghost-badge">Sample question</div>
+                                <p id="home-sample-question">
+                                    “Start a run to preview the first question.”
+                                </p>
+                                <div class="ghost-options">
+                                    <span class="ghost-option">Option A</span>
+                                    <span class="ghost-option">Option B</span>
+                                    <span class="ghost-option ghost-option-active">
+                                        Correct answer
+                                    </span>
+                                    <span class="ghost-option">Option D</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- QUIZ VIEW -->
+        <section id="view-quiz" class="view">
+            <div class="card quiz-card">
+                <header class="card-header">
+                    <div>
+                        <h2>Active quiz</h2>
+                        <div class="muted small">
+                            Question sets are drawn from the MindMile bank with no repeat
+                            set per run.
+                        </div>
+                    </div>
+                </header>
+
+                <div class="quiz-top-row">
+                    <div class="quiz-progress-wrap">
+                        <div class="quiz-progress-label">
+                            <span id="quiz-step-label">Question 1 of 10</span>
+                            <span class="quiz-timer-label">Untimed run</span>
+                        </div>
+                        <div class="quiz-progress-bar">
+                            <div id="quiz-progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <div class="question-badge">Question</div>
+                        <p id="quiz-question-text">
+                            When you start a run, the first question will appear here.
+                        </p>
+                    </div>
+
+                    <div id="quiz-options" class="quiz-options"></div>
+                </div>
+
+                <footer class="quiz-footer">
+                    <button id="btn-quit-quiz" class="btn ghost">
+                        Quit run
+                    </button>
+                    <button id="btn-next-question" class="btn primary">
+                        Next
+                    </button>
+                </footer>
+            </div>
+        </section>
+
+        <!-- RESULTS VIEW -->
+        <section id="view-results" class="view">
+            <div class="card results-card">
+                <header class="card-header">
+                    <div>
+                        <h2>Run summary</h2>
+                        <div class="muted small">
+                            Review your performance and then launch another set.
+                        </div>
+                    </div>
+                    <span id="result-saved-flag" class="pill">Guest run</span>
+                </header>
+
+                <div class="results-layout">
+                    <div class="results-score">
+                        <div class="score-ring">
+                            <div class="score-inner">
+                                <span id="result-score">0%</span>
+                            </div>
+                        </div>
+                        <p id="result-caption" class="results-caption">
+                            Your breakdown for this run will appear here.
+                        </p>
+                    </div>
+
+                    <div class="results-breakdown">
+                        <div class="stat-row">
+                            <span>Total questions</span>
+                            <span id="result-total">0</span>
+                        </div>
+                        <div class="stat-row good">
+                            <span>Correct</span>
+                            <span id="result-correct">0</span>
+                        </div>
+                        <div class="stat-row bad">
+                            <span>Wrong / empty</span>
+                            <span id="result-wrong">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button id="btn-play-again" class="btn primary">
+                        Play another set
+                    </button>
+                    <button id="btn-results-home" class="btn ghost">
+                        Back to home
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILE VIEW -->
+        <section id="view-profile" class="view">
+            <div class="card">
+                <header class="card-header">
+                    <div>
+                        <h2>Your profile</h2>
+                        <div class="muted small">
+                            Signed-in runs from this account are listed here.
+                        </div>
+                    </div>
+                </header>
+
+                <div id="profile-banner" class="banner warning">
+                    Sign in or create an account to start saving your quiz history.
+                </div>
+
+                <div id="history-list" class="history-list"></div>
+            </div>
+        </section>
+
+        <!-- LEADERBOARD VIEW -->
+        <section id="view-leaderboard" class="view">
+            <div class="card">
+                <header class="card-header">
+                    <div>
+                        <h2>Leaderboard</h2>
+                        <div class="muted small">
+                            Top 10 highest scores recorded across all users.
+                        </div>
+                    </div>
+                </header>
+
+                <div id="leaderboard-table-wrap">
+                    <table class="leaderboard-table">
+                        <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Questions</th>
+                            <th>When</th>
+                        </tr>
+                        </thead>
+                        <tbody id="leaderboard-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal-backdrop" class="modal-backdrop hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3 id="auth-modal-title">Welcome back</h3>
+                <p id="auth-modal-subtitle" class="muted small">
+                    Log in to sync your progress and climb the leaderboard.
+                </p>
+            </div>
+            <button id="auth-modal-close" class="modal-close">&times;</button>
+        </div>
+
+        <div class="modal-tabs">
+            <button id="tab-login" class="modal-tab active">Log in</button>
+            <button id="tab-signup" class="modal-tab">Sign up</button>
+        </div>
+
+        <div class="modal-body">
+            <!-- LOGIN FORM -->
+            <form id="form-login">
+                <label>
+                    Email
+                    <input id="login-email" type="email" autocomplete="email" />
+                </label>
+                <label>
+                    Password
+                    <input id="login-password" type="password" autocomplete="current-password" />
+                </label>
+                <div id="login-error" class="form-error hidden"></div>
+                <button type="submit" class="btn primary full">Log in</button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="form-signup" class="hidden">
+                <label>
+                    Username
+                    <input id="signup-username" type="text" autocomplete="username" />
+                </label>
+                <label>
+                    Email
+                    <input id="signup-email" type="email" autocomplete="email" />
+                </label>
+                <label>
+                    Password
+                    <input id="signup-password" type="password" autocomplete="new-password" />
+                </label>
+                <div id="signup-error" class="form-error hidden"></div>
+                <button type="submit" class="btn primary full">Create account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

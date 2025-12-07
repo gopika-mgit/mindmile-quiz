@@ -114,4 +114,4 @@ MindMile Trivia/
 ├── questions.json            # Instructor-provided question bank
 ├── package.json              # Dependencies and scripts
 ├── package-lock.json
-└── .env                      # Local environment variables (not committed)
+└── .env                      # Local environment variables 
